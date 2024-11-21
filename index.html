@@ -15,6 +15,23 @@
       margin: 20px;
     }
 
+    /* Mise en page flexbox pour aligner le titre et l'icône Instagram */
+    .header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .header h1 {
+      margin: 0;
+    }
+
+    .header a {
+      text-decoration: none;
+      color: #333;
+      font-size: 24px;
+    }
+
     /* Mise en page flexbox pour les labels et champs de saisie */
     .form-group {
       display: flex;
@@ -66,29 +83,17 @@
       resize: none;
     }
 
-    /* Style de l'icône Instagram à côté du titre */
-    .icon-container {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .icon-container a {
-      text-decoration: none;
-      color: #333;
-      font-size: 24px;
-    }
-
   </style>
 </head>
 <body>
-  <h1 class="icon-container">
-    Fiche de Dégustation de Vin
+  <!-- Conteneur header avec flexbox -->
+  <div class="header">
+    <h1>Fiche de Dégustation de Vin</h1>
     <!-- Icône Instagram avec le lien -->
     <a href="https://www.instagram.com/florent198vin?igsh=OGJreHBrYjhhOXgw&utm_source=qr" target="_blank">
       <i class="fab fa-instagram"></i>
     </a>
-  </h1>
+  </div>
   
   <form id="wineForm">
     <!-- Prénom du dégustateur -->
