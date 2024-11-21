@@ -11,6 +11,9 @@
   <h1>Fiche de Dégustation de Vin</h1>
   
   <form id="wineForm">
+    <label for="tasterName">Prénom du dégustateur</label>
+    <input type="text" id="tasterName" placeholder="Ex: Jean" required><br><br>
+
     <label for="name">Nom du vin</label>
     <input type="text" id="name" placeholder="Ex: Château Margaux 2015" required><br><br>
 
@@ -36,9 +39,7 @@
     <label for="impression">Impression Générale</label>
     <textarea id="impression" rows="3" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea><br><br>
 
-    <label for="photo">Photo de l'étiquette</label>
-    <input type="file" id="photo" accept="image/*"><br><br>
-    <label for="capture">Prendre une photo</label>
+    <label for="capture">Prendre une photo de l'étiquette</label>
     <input type="file" id="capture" accept="image/*;capture=camera"><br><br>
 
     <button type="button" onclick="saveWine()">Enregistrer en PDF</button>
