@@ -1,43 +1,55 @@
-// Fonction pour générer le PDF avec les informations du formulaire
+// Fonction pour générer et enregistrer le PDF
 function saveWine() {
+  // Créer une nouvelle instance jsPDF
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF();
   
-  // Récupérer les valeurs du formulaire
-  const tasterName = document.getElementById("tasterName").value;
-  const name = document.getElementById("name").value;
-  const vintage = document.getElementById("vintage").value;
-  const region = document.getElementById("region").value;
-  const color = document.getElementById("color").value;
-  const nose = document.getElementById("nose").value;
-  const taste = document.getElementById("taste").value;
-  const impression = document.getElementById("impression").value;
+  // Récupérer les données du formulaire
+  const tasterName = document.getElementById('tasterName').value;
+  const name = document.getElementById('name').value;
+  const vintage = document.getElementById('vintage').value;
+  const region = document.getElementById('region').value;
+  const color = document.getElementById('color').value;
+  const nose = document.getElementById('nose').value;
+  const taste = document.getElementById('taste').value;
+  const impression = document.getElementById('impression').value;
 
-  // Ajouter les informations au PDF
-  doc.text(`Dégustateur: ${tasterName}`, 10, 10);
-  doc.text(`Vin: ${name}`, 10, 20);
-  doc.text(`Millésime: ${vintage}`, 10, 30);
-  doc.text(`Région: ${region}`, 10, 40);
-  doc.text(`Couleur: ${color}`, 10, 50);
-  doc.text(`Nez: ${nose}`, 10, 60);
-  doc.text(`Goût: ${taste}`, 10, 80);
-  doc.text(`Impression Générale: ${impression}`, 10, 100);
+  // Ajouter le titre et les informations du dégustateur
+  doc.setFontSize(18);
+  doc.text('Fiche de Dégustation de Vin', 10, 10);
 
-  // Vérifier s'il y a une image de l'étiquette
-  const captureInput = document.getElementById("capture");
-  if (captureInput.files.length > 0) {
-    const file = captureInput.files[0];
+  doc.setFontSize(12);
+  doc.text(`Prénom du dégustateur : ${tasterName}`, 10, 20);
+  doc.text(`Nom du vin : ${name}`, 10, 30);
+  doc.text(`Millésime : ${vintage}`, 10, 40);
+  doc.text(`Région : ${region}`, 10, 50);
+  doc.text(`Couleur : ${color}`, 10, 60);
+  
+  // Ajouter le nez, le goût et l'impression générale
+  doc.text('Nez :', 10, 70);
+  doc.text(nose, 10, 80);
+  doc.text('Goût :', 10, 100);
+  doc.text(taste, 10, 110);
+  doc.text('Impression générale :', 10, 130);
+  doc.text(impression, 10, 140);
+
+  // Si une photo de l'étiquette est prise (si c'est possible d'enregistrer des images via la capture)
+  const photoInput = document.getElementById('capture');
+  if (photoInput.files.length > 0) {
+    const file = photoInput.files[0];
     const reader = new FileReader();
-    
+
     reader.onload = function(e) {
-      const imgData = e.target.result;
-      doc.addImage(imgData, 'JPEG', 10, 120, 180, 160);
-      doc.save("fiche_degustation.pdf");
+      const img = e.target.result;
+      doc.addImage(img, 'JPEG', 10, 150, 180, 100);
+      // Enregistrer le PDF avec l'image de l'étiquette
+      doc.save('fiche_de_degustation_vin.pdf');
     };
-    
+
+    // Lire l'image sélectionnée
     reader.readAsDataURL(file);
   } else {
-    // Si pas de photo, on sauvegarde juste les informations textuelles
-    doc.save("fiche_degustation.pdf");
+    // Enregistrer le PDF sans image
+    doc.save('fiche_de_degustation_vin.pdf');
   }
 }
