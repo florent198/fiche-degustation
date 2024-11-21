@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fiche de Dégustation de Vin</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+      padding: 0;
+      background-color: #f8f8f8;
+    }
+    h1 {
+      text-align: center;
+      color: #5a3d31;
+    }
+    form {
+      background: #fff;
+      padding: 20px;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      margin: 0 auto;
+    }
+    label {
+      font-weight: bold;
+      display: block;
+      margin-top: 15px;
+    }
+    input, textarea, button {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 16px;
+    }
+    button {
+      background-color: #5a3d31;
+      color: white;
+      border: none;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+    button:hover {
+      background-color: #794c3b;
+    }
+    .output {
+      margin-top: 40px;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  </style>
+</head>
+<body>
+  <h1>Fiche de Dégustation</h1>
+  <form id="wineForm">
+    <label for="name">Nom du vin</label>
+    <input type="text" id="name" placeholder="Ex. Château Margaux">
+
+    <label for="vintage">Millésime</label>
+    <input type="text" id="vintage" placeholder="Ex. 2020">
+
+    <label for="region">Région</label>
+    <input type="text" id="region" placeholder="Ex. Bordeaux">
+
+    <label for="color">Couleur</label>
+    <input type="text" id="color" placeholder="Ex. Rouge, Blanc, Rosé">
+
+    <label for="nose">Nez</label>
+    <textarea id="nose" placeholder="Ex. Arômes de fruits rouges, notes boisées"></textarea>
+
+    <label for="taste">Goût</label>
+    <textarea id="taste" placeholder="Ex. Tanins soyeux, bonne acidité"></textarea>
+
+    <label for="impression">Impression Générale</label>
+    <textarea id="impression" placeholder="Ex. Harmonie parfaite, excellent potentiel de garde"></textarea>
+
+    <button type="button" onclick="saveWine()">Enregistrer</button>
+  </form>
+
+  <div class="output" id="output"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>
