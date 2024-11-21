@@ -13,28 +13,31 @@
       margin: 20px;
     }
 
-    /* Centrer les labels et les champs */
-    label {
-      display: block;
-      margin: 10px 0 5px;
+    /* Mise en page flexbox pour les labels et champs de saisie */
+    .form-group {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
     }
 
-    input[type="text"],
-    input[type="number"],
-    textarea,
-    select,
-    input[type="file"] {
-      width: 100%;
+    .form-group label {
+      width: 30%;
+      margin-right: 10px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 65%;
       padding: 8px;
-      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
-      box-sizing: border-box; /* Ajouté pour éviter les problèmes de largeur */
     }
 
-    /* Appliquer du style à chaque élément du formulaire */
+    /* Style du formulaire */
     form {
-      max-width: 600px;
+      max-width: 800px;
       margin: auto;
     }
 
@@ -45,8 +48,6 @@
       border: none;
       cursor: pointer;
       border-radius: 4px;
-      text-align: center;
-      display: block;
       width: 100%;
     }
 
@@ -54,28 +55,13 @@
       background-color: #45a049;
     }
 
-    /* Centrer verticalement le texte dans les cases */
     textarea {
       height: 120px;
-      vertical-align: middle;
+    }
+
+    /* Ajustement de l'espace et des styles pour les zones de texte */
+    textarea {
       resize: none;
-    }
-
-    /* Pour le label, on garde un alignement à gauche */
-    textarea, input[type="text"], input[type="number"], select {
-      line-height: 1.5;
-    }
-
-    /* Centrer le texte à gauche verticalement dans le champ */
-    .vertical-align {
-      display: flex;
-      align-items: center;
-      height: 100%;
-    }
-
-    .form-container {
-      display: flex;
-      flex-direction: column;
     }
 
   </style>
@@ -84,46 +70,66 @@
   <h1>Fiche de Dégustation de Vin</h1>
   
   <form id="wineForm">
-    <div class="form-container">
+    <!-- Prénom du dégustateur -->
+    <div class="form-group">
       <label for="tasterName">Prénom du dégustateur</label>
       <input type="text" id="tasterName" placeholder="Ex: Jean" required><br><br>
+    </div>
 
+    <!-- Nom du vin -->
+    <div class="form-group">
       <label for="name">Nom du vin</label>
       <input type="text" id="name" placeholder="Ex: Château Margaux 2015" required><br><br>
+    </div>
 
+    <!-- Millésime -->
+    <div class="form-group">
       <label for="vintage">Millésime</label>
       <input type="number" id="vintage" placeholder="Ex: 2015" required><br><br>
+    </div>
 
+    <!-- Région -->
+    <div class="form-group">
       <label for="region">Région</label>
       <input type="text" id="region" placeholder="Ex: Bordeaux" required><br><br>
+    </div>
 
+    <!-- Couleur -->
+    <div class="form-group">
       <label for="color">Couleur</label>
       <select id="color" required>
         <option value="Rouge">Rouge</option>
         <option value="Blanc">Blanc</option>
         <option value="Rosé">Rosé</option>
       </select><br><br>
+    </div>
 
+    <!-- Nez -->
+    <div class="form-group">
       <label for="nose">Nez</label>
-      <div class="vertical-align">
-        <textarea id="nose" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea>
-      </div><br><br>
+      <textarea id="nose" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea>
+    </div>
 
+    <!-- Goût -->
+    <div class="form-group">
       <label for="taste">Goût</label>
-      <div class="vertical-align">
-        <textarea id="taste" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea>
-      </div><br><br>
+      <textarea id="taste" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea>
+    </div>
 
+    <!-- Impression Générale -->
+    <div class="form-group">
       <label for="impression">Impression Générale</label>
-      <div class="vertical-align">
-        <textarea id="impression" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea>
-      </div><br><br>
+      <textarea id="impression" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea>
+    </div>
 
+    <!-- Photo de l'étiquette -->
+    <div class="form-group">
       <label for="capture">Prendre une photo de l'étiquette</label>
       <input type="file" id="capture" accept="image/*;capture=camera"><br><br>
-
-      <button type="button" onclick="saveWine()">Enregistrer en PDF</button>
     </div>
+
+    <!-- Bouton enregistrer -->
+    <button type="button" onclick="saveWine()">Enregistrer en PDF</button>
   </form>
 
   <div id="output"></div>
