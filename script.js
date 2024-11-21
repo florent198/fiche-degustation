@@ -1,4 +1,10 @@
+// Fonction pour générer le PDF avec les informations du formulaire
 function saveWine() {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
+  
+  // Récupérer les valeurs du formulaire
+  const tasterName = document.getElementById("tasterName").value;
   const name = document.getElementById("name").value;
   const vintage = document.getElementById("vintage").value;
   const region = document.getElementById("region").value;
@@ -7,47 +13,31 @@ function saveWine() {
   const taste = document.getElementById("taste").value;
   const impression = document.getElementById("impression").value;
 
-  // Vérifier les deux champs de photo (fichier ou capture)
-  const photoInput = document.getElementById("photo");
+  // Ajouter les informations au PDF
+  doc.text(`Dégustateur: ${tasterName}`, 10, 10);
+  doc.text(`Vin: ${name}`, 10, 20);
+  doc.text(`Millésime: ${vintage}`, 10, 30);
+  doc.text(`Région: ${region}`, 10, 40);
+  doc.text(`Couleur: ${color}`, 10, 50);
+  doc.text(`Nez: ${nose}`, 10, 60);
+  doc.text(`Goût: ${taste}`, 10, 80);
+  doc.text(`Impression Générale: ${impression}`, 10, 100);
+
+  // Vérifier s'il y a une image de l'étiquette
   const captureInput = document.getElementById("capture");
-  let photo = "";
-
-  const fileInput = photoInput.files[0] || captureInput.files[0];
-  if (fileInput) {
+  if (captureInput.files.length > 0) {
+    const file = captureInput.files[0];
     const reader = new FileReader();
-    reader.onload = function (e) {
-      photo = e.target.result;
-      generatePDF(name, vintage, region, color, nose, taste, impression, photo);
+    
+    reader.onload = function(e) {
+      const imgData = e.target.result;
+      doc.addImage(imgData, 'JPEG', 10, 120, 180, 160);
+      doc.save("fiche_degustation.pdf");
     };
-    reader.readAsDataURL(fileInput);
+    
+    reader.readAsDataURL(file);
   } else {
-    generatePDF(name, vintage, region, color, nose, taste, impression, photo);
+    // Si pas de photo, on sauvegarde juste les informations textuelles
+    doc.save("fiche_degustation.pdf");
   }
-}
-
-function generatePDF(name, vintage, region, color, nose, taste, impression, photo) {
-  const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
-
-  // Ajout du titre
-  doc.setFontSize(18);
-  doc.text('Fiche de Dégustation de Vin', 20, 20);
-
-  // Ajout des informations sur le vin
-  doc.setFontSize(12);
-  doc.text(`Nom du vin : ${name}`, 20, 30);
-  doc.text(`Millésime : ${vintage}`, 20, 40);
-  doc.text(`Région : ${region}`, 20, 50);
-  doc.text(`Couleur : ${color}`, 20, 60);
-  doc.text(`Nez : ${nose}`, 20, 70);
-  doc.text(`Goût : ${taste}`, 20, 90);
-  doc.text(`Impression Générale : ${impression}`, 20, 110);
-
-  // Ajout de l'image de l'étiquette si disponible
-  if (photo) {
-    doc.addImage(photo, 'JPEG', 20, 130, 100, 100); // Ajoute l'image en position 20, 130
-  }
-
-  // Téléchargement du PDF
-  doc.save('fiche_de_degustation.pdf');
 }
