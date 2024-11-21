@@ -1,4 +1,3 @@
-// Fonction pour sauvegarder une fiche
 function saveWine() {
   const name = document.getElementById("name").value;
   const vintage = document.getElementById("vintage").value;
@@ -8,21 +7,31 @@ function saveWine() {
   const taste = document.getElementById("taste").value;
   const impression = document.getElementById("impression").value;
 
-  // Création de l'objet fiche
-  const wine = { name, vintage, region, color, nose, taste, impression };
+  // Récupérer la photo de l'étiquette
+  const photoInput = document.getElementById("photo");
+  let photo = "";
+  if (photoInput.files && photoInput.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function (e) {
+      photo = e.target.result;
+      saveToStorage(name, vintage, region, color, nose, taste, impression, photo);
+    };
+    reader.readAsDataURL(photoInput.files[0]);
+  } else {
+    saveToStorage(name, vintage, region, color, nose, taste, impression, photo);
+  }
+}
 
-  // Récupération des fiches existantes
+function saveToStorage(name, vintage, region, color, nose, taste, impression, photo) {
+  const wine = { name, vintage, region, color, nose, taste, impression, photo };
+
   const savedWines = JSON.parse(localStorage.getItem("wines")) || [];
   savedWines.push(wine);
 
-  // Sauvegarde dans le localStorage
   localStorage.setItem("wines", JSON.stringify(savedWines));
-
-  // Affichage des fiches
   displayWines();
 }
 
-// Fonction pour afficher les fiches sauvegardées
 function displayWines() {
   const savedWines = JSON.parse(localStorage.getItem("wines")) || [];
   const output = document.getElementById("output");
@@ -42,6 +51,7 @@ function displayWines() {
         <p><strong>Nez :</strong> ${wine.nose}</p>
         <p><strong>Goût :</strong> ${wine.taste}</p>
         <p><strong>Impression Générale :</strong> ${wine.impression}</p>
+        ${wine.photo ? `<img src="${wine.photo}" alt="Étiquette du vin" style="max-width:100%; height:auto;">` : ""}
         <button onclick="deleteWine(${index})">Supprimer</button>
       </div>
       <hr>
@@ -51,7 +61,6 @@ function displayWines() {
   output.innerHTML = html;
 }
 
-// Fonction pour supprimer une fiche
 function deleteWine(index) {
   const savedWines = JSON.parse(localStorage.getItem("wines")) || [];
   savedWines.splice(index, 1);
@@ -59,5 +68,5 @@ function deleteWine(index) {
   displayWines();
 }
 
-// Chargement initial des fiches
-displayWines();
+// Afficher les fiches au chargement
+document.addEventListener("DOMContentLoaded", displayWines);
