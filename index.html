@@ -4,19 +4,21 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Fiche de Dégustation</title>
+  <!-- Ajout du script jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 </head>
 <body>
   <h1>Fiche de Dégustation de Vin</h1>
   
   <form id="wineForm">
     <label for="name">Nom du vin</label>
-    <input type="text" id="name" required><br><br>
+    <input type="text" id="name" placeholder="Ex: Château Margaux 2015" required><br><br>
 
     <label for="vintage">Millésime</label>
-    <input type="number" id="vintage" required><br><br>
+    <input type="number" id="vintage" placeholder="Ex: 2015" required><br><br>
 
     <label for="region">Région</label>
-    <input type="text" id="region" required><br><br>
+    <input type="text" id="region" placeholder="Ex: Bordeaux" required><br><br>
 
     <label for="color">Couleur</label>
     <select id="color" required>
@@ -26,23 +28,24 @@
     </select><br><br>
 
     <label for="nose">Nez</label>
-    <textarea id="nose" rows="3"></textarea><br><br>
+    <textarea id="nose" rows="3" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea><br><br>
 
     <label for="taste">Goût</label>
-    <textarea id="taste" rows="3"></textarea><br><br>
+    <textarea id="taste" rows="3" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea><br><br>
 
     <label for="impression">Impression Générale</label>
-    <textarea id="impression" rows="3"></textarea><br><br>
+    <textarea id="impression" rows="3" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea><br><br>
 
     <label for="photo">Photo de l'étiquette</label>
     <input type="file" id="photo" accept="image/*"><br><br>
+    <label for="capture">Prendre une photo</label>
+    <input type="file" id="capture" accept="image/*;capture=camera"><br><br>
 
-    <button type="button" onclick="saveWine()">Enregistrer</button>
+    <button type="button" onclick="saveWine()">Enregistrer en PDF</button>
   </form>
 
   <div id="output"></div>
 
-  <!-- Intégration du fichier JavaScript -->
   <script src="script.js"></script>
 </body>
 </html>
