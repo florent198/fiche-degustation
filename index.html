@@ -17,7 +17,6 @@
     label {
       display: block;
       margin: 10px 0 5px;
-      text-align: center;
     }
 
     input[type="text"],
@@ -30,6 +29,7 @@
       margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 4px;
+      box-sizing: border-box; /* Ajouté pour éviter les problèmes de largeur */
     }
 
     /* Appliquer du style à chaque élément du formulaire */
@@ -54,48 +54,76 @@
       background-color: #45a049;
     }
 
-    /* Centrer les textarea (Nez, Goût, Impression générale) */
+    /* Centrer verticalement le texte dans les cases */
     textarea {
       height: 120px;
+      vertical-align: middle;
+      resize: none;
     }
+
+    /* Pour le label, on garde un alignement à gauche */
+    textarea, input[type="text"], input[type="number"], select {
+      line-height: 1.5;
+    }
+
+    /* Centrer le texte à gauche verticalement dans le champ */
+    .vertical-align {
+      display: flex;
+      align-items: center;
+      height: 100%;
+    }
+
+    .form-container {
+      display: flex;
+      flex-direction: column;
+    }
+
   </style>
 </head>
 <body>
   <h1>Fiche de Dégustation de Vin</h1>
   
   <form id="wineForm">
-    <label for="tasterName">Prénom du dégustateur</label>
-    <input type="text" id="tasterName" placeholder="Ex: Jean" required><br><br>
+    <div class="form-container">
+      <label for="tasterName">Prénom du dégustateur</label>
+      <input type="text" id="tasterName" placeholder="Ex: Jean" required><br><br>
 
-    <label for="name">Nom du vin</label>
-    <input type="text" id="name" placeholder="Ex: Château Margaux 2015" required><br><br>
+      <label for="name">Nom du vin</label>
+      <input type="text" id="name" placeholder="Ex: Château Margaux 2015" required><br><br>
 
-    <label for="vintage">Millésime</label>
-    <input type="number" id="vintage" placeholder="Ex: 2015" required><br><br>
+      <label for="vintage">Millésime</label>
+      <input type="number" id="vintage" placeholder="Ex: 2015" required><br><br>
 
-    <label for="region">Région</label>
-    <input type="text" id="region" placeholder="Ex: Bordeaux" required><br><br>
+      <label for="region">Région</label>
+      <input type="text" id="region" placeholder="Ex: Bordeaux" required><br><br>
 
-    <label for="color">Couleur</label>
-    <select id="color" required>
-      <option value="Rouge">Rouge</option>
-      <option value="Blanc">Blanc</option>
-      <option value="Rosé">Rosé</option>
-    </select><br><br>
+      <label for="color">Couleur</label>
+      <select id="color" required>
+        <option value="Rouge">Rouge</option>
+        <option value="Blanc">Blanc</option>
+        <option value="Rosé">Rosé</option>
+      </select><br><br>
 
-    <label for="nose">Nez</label>
-    <textarea id="nose" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea><br><br>
+      <label for="nose">Nez</label>
+      <div class="vertical-align">
+        <textarea id="nose" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea>
+      </div><br><br>
 
-    <label for="taste">Goût</label>
-    <textarea id="taste" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea><br><br>
+      <label for="taste">Goût</label>
+      <div class="vertical-align">
+        <textarea id="taste" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea>
+      </div><br><br>
 
-    <label for="impression">Impression Générale</label>
-    <textarea id="impression" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea><br><br>
+      <label for="impression">Impression Générale</label>
+      <div class="vertical-align">
+        <textarea id="impression" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea>
+      </div><br><br>
 
-    <label for="capture">Prendre une photo de l'étiquette</label>
-    <input type="file" id="capture" accept="image/*;capture=camera"><br><br>
+      <label for="capture">Prendre une photo de l'étiquette</label>
+      <input type="file" id="capture" accept="image/*;capture=camera"><br><br>
 
-    <button type="button" onclick="saveWine()">Enregistrer en PDF</button>
+      <button type="button" onclick="saveWine()">Enregistrer en PDF</button>
+    </div>
   </form>
 
   <div id="output"></div>
