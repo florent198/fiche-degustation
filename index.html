@@ -6,6 +6,59 @@
   <title>Fiche de Dégustation</title>
   <!-- Ajout du script jsPDF -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <style>
+    /* Style général du formulaire */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+
+    /* Centrer les labels et les champs */
+    label {
+      display: block;
+      margin: 10px 0 5px;
+      text-align: center;
+    }
+
+    input[type="text"],
+    input[type="number"],
+    textarea,
+    select,
+    input[type="file"] {
+      width: 100%;
+      padding: 8px;
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+
+    /* Appliquer du style à chaque élément du formulaire */
+    form {
+      max-width: 600px;
+      margin: auto;
+    }
+
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 4px;
+      text-align: center;
+      display: block;
+      width: 100%;
+    }
+
+    button:hover {
+      background-color: #45a049;
+    }
+
+    /* Centrer les textarea (Nez, Goût, Impression générale) */
+    textarea {
+      height: 120px;
+    }
+  </style>
 </head>
 <body>
   <h1>Fiche de Dégustation de Vin</h1>
@@ -31,13 +84,13 @@
     </select><br><br>
 
     <label for="nose">Nez</label>
-    <textarea id="nose" rows="3" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea><br><br>
+    <textarea id="nose" placeholder="Ex: Arômes de fruits rouges, épices, bois" required></textarea><br><br>
 
     <label for="taste">Goût</label>
-    <textarea id="taste" rows="3" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea><br><br>
+    <textarea id="taste" placeholder="Ex: Tanins souples, acidité bien équilibrée" required></textarea><br><br>
 
     <label for="impression">Impression Générale</label>
-    <textarea id="impression" rows="3" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea><br><br>
+    <textarea id="impression" placeholder="Ex: Très bon vin, à conserver quelques années" required></textarea><br><br>
 
     <label for="capture">Prendre une photo de l'étiquette</label>
     <input type="file" id="capture" accept="image/*;capture=camera"><br><br>
