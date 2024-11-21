@@ -7,66 +7,47 @@ function saveWine() {
   const taste = document.getElementById("taste").value;
   const impression = document.getElementById("impression").value;
 
-  // Récupérer la photo de l'étiquette
+  // Vérifier les deux champs de photo (fichier ou capture)
   const photoInput = document.getElementById("photo");
+  const captureInput = document.getElementById("capture");
   let photo = "";
-  if (photoInput.files && photoInput.files[0]) {
+
+  const fileInput = photoInput.files[0] || captureInput.files[0];
+  if (fileInput) {
     const reader = new FileReader();
     reader.onload = function (e) {
       photo = e.target.result;
-      saveToStorage(name, vintage, region, color, nose, taste, impression, photo);
+      generatePDF(name, vintage, region, color, nose, taste, impression, photo);
     };
-    reader.readAsDataURL(photoInput.files[0]);
+    reader.readAsDataURL(fileInput);
   } else {
-    saveToStorage(name, vintage, region, color, nose, taste, impression, photo);
+    generatePDF(name, vintage, region, color, nose, taste, impression, photo);
   }
 }
 
-function saveToStorage(name, vintage, region, color, nose, taste, impression, photo) {
-  const wine = { name, vintage, region, color, nose, taste, impression, photo };
+function generatePDF(name, vintage, region, color, nose, taste, impression, photo) {
+  const { jsPDF } = window.jspdf;
+  const doc = new jsPDF();
 
-  const savedWines = JSON.parse(localStorage.getItem("wines")) || [];
-  savedWines.push(wine);
+  // Ajout du titre
+  doc.setFontSize(18);
+  doc.text('Fiche de Dégustation de Vin', 20, 20);
 
-  localStorage.setItem("wines", JSON.stringify(savedWines));
-  displayWines();
-}
+  // Ajout des informations sur le vin
+  doc.setFontSize(12);
+  doc.text(`Nom du vin : ${name}`, 20, 30);
+  doc.text(`Millésime : ${vintage}`, 20, 40);
+  doc.text(`Région : ${region}`, 20, 50);
+  doc.text(`Couleur : ${color}`, 20, 60);
+  doc.text(`Nez : ${nose}`, 20, 70);
+  doc.text(`Goût : ${taste}`, 20, 90);
+  doc.text(`Impression Générale : ${impression}`, 20, 110);
 
-function displayWines() {
-  const savedWines = JSON.parse(localStorage.getItem("wines")) || [];
-  const output = document.getElementById("output");
-
-  if (savedWines.length === 0) {
-    output.innerHTML = "<p>Aucune fiche enregistrée pour le moment.</p>";
-    return;
+  // Ajout de l'image de l'étiquette si disponible
+  if (photo) {
+    doc.addImage(photo, 'JPEG', 20, 130, 100, 100); // Ajoute l'image en position 20, 130
   }
 
-  let html = "<h2>Fiches de Dégustation</h2>";
-  savedWines.forEach((wine, index) => {
-    html += `
-      <div>
-        <h3>${wine.name} (${wine.vintage})</h3>
-        <p><strong>Région :</strong> ${wine.region}</p>
-        <p><strong>Couleur :</strong> ${wine.color}</p>
-        <p><strong>Nez :</strong> ${wine.nose}</p>
-        <p><strong>Goût :</strong> ${wine.taste}</p>
-        <p><strong>Impression Générale :</strong> ${wine.impression}</p>
-        ${wine.photo ? `<img src="${wine.photo}" alt="Étiquette du vin" style="max-width:100%; height:auto;">` : ""}
-        <button onclick="deleteWine(${index})">Supprimer</button>
-      </div>
-      <hr>
-    `;
-  });
-
-  output.innerHTML = html;
+  // Téléchargement du PDF
+  doc.save('fiche_de_degustation.pdf');
 }
-
-function deleteWine(index) {
-  const savedWines = JSON.parse(localStorage.getItem("wines")) || [];
-  savedWines.splice(index, 1);
-  localStorage.setItem("wines", JSON.stringify(savedWines));
-  displayWines();
-}
-
-// Afficher les fiches au chargement
-document.addEventListener("DOMContentLoaded", displayWines);
